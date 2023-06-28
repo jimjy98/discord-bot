@@ -5,11 +5,5 @@
             "src": "bot.js",
             "use": "@now/node"
         }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "bot.js"
-        }
     ]
 }

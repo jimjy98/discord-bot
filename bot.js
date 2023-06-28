@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
-const TOKEN = "MTEyMzM1NTE0MzQ2Nzk3ODg2Mw.G4ZFxY.QfBqP0UmzWwEktzbhuagTjbvA52dBzzzDF6itg";
-const usernamesToDisconnect = ['nicholops'];
+const TOKEN = process.env.TOKEN;
+const usernamesToDisconnect = process.env.BLACKLIST.split(' ');
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
