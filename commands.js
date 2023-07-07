@@ -1,16 +1,18 @@
 import { REST, Routes } from 'discord.js';
+import 'dotenv/config';
 
 const TOKEN = process.env.TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 
 const commands = [
     {
-        name: 'ping',
-        description: 'Replies with Pong!',
+        name: 'add-intro',
+        description: 'Add new intro',
+        
     },
     {
-        name: 'lgbtq',
-        description: 'nikizoo'
+        name: 'delete-intro',
+        description: 'Remove intro'
     }
 ];
 
