@@ -87,6 +87,10 @@ function deleteIntro(username) {
     }
 }
 
+function isNewUser(oldState, newState) {
+    return oldState.serverDeaf == newState.serverDeaf && oldState.serverMute == newState.serverMute && oldState.selfDeaf == newState.selfDeaf && oldState.selfMute == newState.selfMute && oldState.selfVideo == newState.selfVideo && oldState.streaming == newState.streaming;
+}
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
@@ -94,11 +98,12 @@ client.on('ready', () => {
 client.on('voiceStateUpdate', (oldState, newState) => {
     const newMember = newState.member;
     const newMemberUsername = newMember.user.username;
+
     if (usernamesToDisconnect.includes(newMemberUsername)) {
         console.log("disconnecting ", newMember.displayName);
         newMember.voice.disconnect();
     }
-    if (newMemberUsername !== 'Nicholops' && currentIntroMapping.hasOwnProperty(newMemberUsername)) {
+    if (newMemberUsername !== 'Nicholops' && currentIntroMapping.hasOwnProperty(newMemberUsername) && isNewUser(oldState, newState)) {
         console.log("playing audio for ", newMemberUsername);
         playAudio(newState.channelId, newState.guild.id, newState.guild.voiceAdapterCreator, currentIntroMapping[newMemberUsername]);
     }
