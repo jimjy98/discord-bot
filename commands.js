@@ -6,13 +6,8 @@ const CLIENT_ID = process.env.CLIENT_ID;
 
 const commands = [
     {
-        name: 'add-intro',
-        description: 'Add new intro',
-        
-    },
-    {
-        name: 'delete-intro',
-        description: 'Remove intro'
+        name: 'adding-intro',
+        description: 'how to add audio intro to discord'
     }
 ];
 

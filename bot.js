@@ -9,6 +9,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const TOKEN = process.env.TOKEN;
 const usernamesToDisconnect = process.env.BLACKLIST.split(' ');
 const prefix = '!';
+const audioMaxDownloadSize = process.env.MAX_DOWNLOAD;
 
 const currentIntroMapping = introMapping;
 var isReady = true;
@@ -47,7 +48,7 @@ async function downloadAudioFile(path, url) {
         });
 
         let downloadSize = parseInt(response.headers['content-length']);
-        if (downloadSize > 27000) {
+        if (downloadSize > audioMaxDownloadSize) {
             throw new Error('Download size exceeds the maximum allowed limit');
         }
 
@@ -100,6 +101,13 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     if (newMemberUsername !== 'Nicholops' && currentIntroMapping.hasOwnProperty(newMemberUsername)) {
         console.log("playing audio for ", newMemberUsername);
         playAudio(newState.channelId, newState.guild.id, newState.guild.voiceAdapterCreator, currentIntroMapping[newMemberUsername]);
+    }
+});
+
+client.on('interactionCreate', async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+    if (interaction.commandName === 'adding-intro') {
+        await interaction.reply('Download an mp3 file, go to https://audiotrimmer.com/, and after cropping, right-click download button -> copy link address and use that in a command: !add-intro urlHere');
     }
 });
 
